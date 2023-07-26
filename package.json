@@ -1,0 +1,15 @@
+{
+  "name": "geovis-pay",
+  "version": "1.0.0",
+  "description": "Geovis聚合支付,",
+  "main": "pay.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pay",
+    "geovis"
+  ],
+  "author": "wangzhengjie",
+  "license": "ISC"
+}
