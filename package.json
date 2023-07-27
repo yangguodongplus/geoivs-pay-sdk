@@ -1,5 +1,5 @@
 {
-  "name": "geovis-pay",
+  "name": "geovis-pay-sdk",
   "version": "1.0.0",
   "description": "Geovis聚合支付,",
   "main": "pay.js",
@@ -11,5 +11,14 @@
     "geovis"
   ],
   "author": "wangzhengjie",
-  "license": "ISC"
+  "license": "ISC",
+  "types": "./pay.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangguodongplus/geovis-pay-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yangguodongplus/geovis-pay-sdk/issues"
+  },
+  "homepage": "https://github.com/yangguodongplus/geovis-pay-sdk#readme"
 }
