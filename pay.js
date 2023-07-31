@@ -9,7 +9,7 @@ class Pay {
         }
         else {
             let Host = "https://pay.geovisearth.com";
-            let Port = "https://pay.geovisearth.com";
+            let Port = "";
             let AppKey = "";
             let SecretKey = "";
             let expireTime = 86400;
@@ -40,8 +40,8 @@ class Pay {
         });
     }
     async charge(param) {
+        this.option.accessToken=auth();
         //const url = this.PayHost + '/api/pay/charge';
-        // 发起POST请求
         const postData = JSON.stringify(param);
         const options = {
             hostname: this.option.host,
@@ -78,8 +78,7 @@ class Pay {
     }
 
     async chargeNotify(param) {
-        //const url = this.PayHost + '/api/pay/charge';
-        // 发起POST请求
+        this.option.accessToken=auth();
         const postData = JSON.stringify(param);
         const options = {
             hostname: this.option.host,

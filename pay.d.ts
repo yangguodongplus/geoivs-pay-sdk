@@ -6,17 +6,23 @@ declare class Pay {
 	public async charge(param: ChargeParamater<T>): Promise<PayResult<T>>;
 	public async chargeNotify(param: ChargeNotifyParamter): Promise<PayResult<T>>;
 }
-declare class AccessTokenResponse
-{ 
+declare class AccessTokenResponse {
 	public AccessToken: string;
 	public ExpireTime: Date;
 }
 declare class ChargeNotifyParamter {
+	constructor(){}
 	public Channel: number;
 	public Platform: number;
 	public OutTradeNo: string;
 	public TradeNo: string;
-	public Body: string;
+	//public Body: string;
+}
+declare class ChargeNotifyData
+{
+	public OutTradeNo: string;
+	public TradeNo: string;
+	public TotalAmount: number;
 }
 declare class ChargeParamater<T> {
 	public Channel: number;
@@ -55,4 +61,22 @@ declare class H5Info {
 declare class Payer {
 	public OpenId: string;
 }
-export { Pay, PayOption, ChargeParamater,ChargeNotifyParamter, PayResult, ApplepayOrder }
+declare enum Pay_Channel {
+	Alipay = 1,
+	Wechatpay = 2,
+	// Unionpay=3,
+	// Adyenpay=4,
+	// Paypal=5,
+	// Worldpay=6,
+	// Joinpay=7,
+	//Applepay=8
+}
+declare enum PayPlatform {
+	Web = 1,
+	Wap = 2,
+	AppPay = 3,
+	ScanPay = 4,
+	BarcodePay = 5,
+	JSPay = 6
+}
+export { Pay, TradeType, Pay_Channel,PayPlatform, PayOption, ChargeParamater, ChargeNotifyParamter, ChargeNotifyData,PayResult }
