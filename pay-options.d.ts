@@ -12,4 +12,22 @@ declare class PayResult<T>{
     public Message:string;
     public Data?:T;
 }
-export {PayOption,PayResult}
+declare enum Pay_Channel {
+	Alipay = 1,
+	Wechatpay = 2,
+	// Unionpay=3,
+	// Adyenpay=4,
+	// Paypal=5,
+	// Worldpay=6,
+	// Joinpay=7,
+	//Applepay=8
+}
+declare enum PayPlatform {
+	Web = 1,
+	Wap = 2,
+	AppPay = 3,
+	ScanPay = 4,
+	BarcodePay = 5,
+	JSPay = 6
+}
+export {PayOption,PayResult,Pay_Channel,PayPlatform}

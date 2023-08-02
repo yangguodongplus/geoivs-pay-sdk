@@ -13,7 +13,7 @@ class Pay {
             let AppKey = "";
             let SecretKey = "";
             let expireTime = 86400;
-            this.option = new PayOption(Host,Port, AppKey, SecretKey, expireTime);
+            this.option = new PayOption(Host, Port, AppKey, SecretKey, expireTime);
         }
         this._frame = null;
     }
@@ -24,7 +24,8 @@ class Pay {
             expireTime: this.option.expireTime
         };
         const queryParams = querystring.stringify(params);
-        const url = `${this.option.host}/api/auth/AccessToken?${queryParams}`;
+        let port = this.option.port ? `:${this.option.port}` : '';
+        const url = `http://${this.option.host}${port}/api/auth/AccessToken?${queryParams}`;
         return new Promise((resolve, reject) => {
             http.get(url, (response) => {
                 let data = '';
@@ -40,8 +41,19 @@ class Pay {
         });
     }
     async charge(param) {
-        this.option.accessToken=auth();
-        //const url = this.PayHost + '/api/pay/charge';
+        await this.auth().then(res => {
+            if (res.Success && res.Data) {
+                this.option.accessToken = res.Data.AccessToken;
+            }
+        });;
+
+        if (!this.option.accessToken) {
+            let result = {
+                Success: false,
+                Message: "授权失败"
+            };
+            return new Promise((resolve, reject) => { resolve(JSON.parse(result)) });
+        }
         const postData = JSON.stringify(param);
         const options = {
             hostname: this.option.host,
@@ -78,7 +90,19 @@ class Pay {
     }
 
     async chargeNotify(param) {
-        this.option.accessToken=auth();
+        await this.auth().then(res => {
+            if (res.Success && res.Data) {
+                this.option.accessToken = res.Data.AccessToken;
+            }
+        });;
+
+        if (!this.option.accessToken) {
+            let result = {
+                Success: false,
+                Message: "授权失败"
+            };
+            return new Promise((resolve, reject) => { resolve(JSON.parse(result)) });
+        }
         const postData = JSON.stringify(param);
         const options = {
             hostname: this.option.host,
@@ -113,5 +137,49 @@ class Pay {
         });
 
     }
+
+    // async notifyHandler() {
+    //     const context = this.httpContextAccessor.HttpContext;
+
+    //     // let param=
+    //     let port = this.option.port ? `:${this.option.port}` : '';
+    //     const url = `http://${this.option.host}${port}/api/pay/notify${queryParams}`;
+    //     // const url = `${this.ApiHost}${context.Request.Path.Value.replace('payment', 'pay')}`;
+    //     const headers = {
+    //         APPKEY: this.AppKey,
+    //         SECRETKEY: this.SecretKey,
+    //         ACCESSTOKEN: this.AccessToken,
+    //     };
+
+    //     const requestOptions = {
+    //         method: context.Request.Method,
+    //         headers: headers,
+    //     };
+
+    //     // Body
+    //     if (context.Request.ContentType.includes('application/x-www-form-urlencoded')) {
+    //         const formData = new URLSearchParams();
+    //         context.Request.Form.forEach((entry) => {
+    //             formData.append(entry.key, entry.value.toString());
+    //         });
+    //         requestOptions.body = formData;
+    //     } else if (context.Request.ContentType.includes('application/json')) {
+    //         const requestBody = await new StreamReader(context.Request.Body, Encoding.UTF8).ReadToEndAsync();
+    //         if (requestBody) {
+    //             requestOptions.body = JSON.parse(requestBody);
+    //         }
+    //     }
+
+
+
+
+    //     // const response = await fetch(url, requestOptions);
+    //     // const responseData = await response.json();
+    //     // const apiResult = new ApiResult();
+    //     // Object.assign(apiResult, responseData);
+
+    //     return apiResult;
+    // }
+
 }
 module.exports = { Pay, PayOption, PayResult };

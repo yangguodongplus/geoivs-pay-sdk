@@ -1,10 +1,11 @@
-import { PayOption, PayResult } from 'geovis-pay/pay-options'
+import { PayOption, PayResult, Pay_Channel,PayPlatform} from 'geovis-pay/pay-options'
 declare class Pay {
 	public option: PayOption;
 	constructor(option: PayOption | null);
 	public async auth(): Promise<PayResult<AccessTokenResponse>>;
 	public async charge(param: ChargeParamater<T>): Promise<PayResult<T>>;
 	public async chargeNotify(param: ChargeNotifyParamter): Promise<PayResult<T>>;
+	public async notifyHandler(): Promise<PayResult<T>>;
 }
 declare class AccessTokenResponse {
 	public AccessToken: string;
@@ -18,7 +19,7 @@ declare class ChargeNotifyParamter {
 	public TradeNo: string;
 	//public Body: string;
 }
-declare class ChargeNotifyData
+declare class ChargeNotifyResponse
 {
 	public OutTradeNo: string;
 	public TradeNo: string;
@@ -61,22 +62,4 @@ declare class H5Info {
 declare class Payer {
 	public OpenId: string;
 }
-declare enum Pay_Channel {
-	Alipay = 1,
-	Wechatpay = 2,
-	// Unionpay=3,
-	// Adyenpay=4,
-	// Paypal=5,
-	// Worldpay=6,
-	// Joinpay=7,
-	//Applepay=8
-}
-declare enum PayPlatform {
-	Web = 1,
-	Wap = 2,
-	AppPay = 3,
-	ScanPay = 4,
-	BarcodePay = 5,
-	JSPay = 6
-}
-export { Pay, TradeType, Pay_Channel,PayPlatform, PayOption, ChargeParamater, ChargeNotifyParamter, ChargeNotifyData,PayResult }
+export { Pay, TradeType, Pay_Channel,PayPlatform, PayOption, ChargeParamater, ChargeNotifyParamter, ChargeNotifyResponse,PayResult }

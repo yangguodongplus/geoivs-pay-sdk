@@ -1,6 +1,6 @@
 {
   "name": "geovis-pay-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Geovis聚合支付,",
   "main": "pay.js",
   "scripts": {
